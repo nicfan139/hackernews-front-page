@@ -25,7 +25,10 @@ const Comment = ({ commentId }) => {
         border: details && details.deleted ? 'none' : '1px solid lightgrey'
       }}
     >
+      {/* Show Loading Icon while comment data is being fetched from the HackerNews API */}
       { !details && <LoadingIcon message='Fetching comment' /> }
+
+      {/* Show comment details when data is fetched */}
       { details && !details.deleted && (
         <>
           <p className='comment__author'>

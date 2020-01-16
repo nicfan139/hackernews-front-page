@@ -32,7 +32,12 @@
 
     .story-card__header-title {
       font-weight: bold;
-      color: $title-secondary
+      color: $title-secondary;
+      transition: all 0.3s;
+
+      &:hover {
+        color: $link-hover-blue;
+      }
     }
 
     .story-card__header-author {
@@ -47,18 +52,19 @@
     justify-content: space-between;
     align-items: center;
 
-    .story-card__header-stats {
-      margin-right: 20px;
-
-      .story-card__header-stat {
-        margin: 0px 5px;
-      }
+    .story_card__header-toggle {
+      font-size: 24px;
     }
   }
 }
 
 .story-card__body {
   border: 1px solid lightgrey;
+
+  .story-card__body-no-comments-message {
+    text-align: center;
+    font-size: 18px;
+  }
 
   .story-card__body-comments-title {
     text-align: center;
@@ -96,7 +102,11 @@
     }
   }
 
-  .story-card__body {  
+  .story-card__body {
+    .story-card__body-no-comments-message {
+      text-align: center;
+      font-size: 16px;
+    }
 
     .story-card__body-comments-title {
       text-align: center;

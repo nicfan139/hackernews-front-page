@@ -7,7 +7,7 @@ import StoryCard from './components/StoryCard';
 /*
   OVERALL NOTES:
     - I DON'T LIKE the way HackerNews has structured/organized their API.
-    - Built entirely with Hooks. No class components.
+    - App was built entirely with Hooks. No class components.
     - Assumed that the "Top 10" stories are the first 10 items of the return array of size 500 from the 'topstories' endpoint.
     - Assumed that the "Top 20" comments are the first 20 items for each story's 'kids' property.
     - Assumed that we will not have to worry about extensive error handling for API requests.
@@ -17,8 +17,9 @@ import StoryCard from './components/StoryCard';
     - I DON'T LIKE the way HackerNews has structured/organized their API.
 
   POTENTIAL IMPROVEMENTS:
-    - Store HackerNews API data into a Redux store to prevent uneccessary repeated API calls on component re-render (i.e. some form of caching)
-    - Implement a parent/child component logic, where only the parent handles the API fetch logic and the child acts as a "dumb" component
+    - Store HackerNews API data into a Redux store to prevent uneccessary repeated API calls on component re-render (i.e. some form of caching).
+    - Implement a parent/child component logic, where only the parent handles the API fetch logic and the child acts as a "dumb" component.
+    - Cleanup any async promises by rejecting/resolving them on component unmount (stop memory leaks).
 */
 
 const App = () => {
@@ -43,9 +44,11 @@ const App = () => {
 
       {/* Body */}
       <div className='app__body'>
+        {/* Show Loading Icon while 'storiesIds' are being fetched from the HackerNews API */}
         { !storiesIds && <LoadingIcon message='Fetching stories' /> }
-        {
-          storiesIds && storiesIds.map(storyId => {
+
+        {/* Render Story Cards when 'storiesIds' are fetched' */}
+        { storiesIds && storiesIds.map(storyId => {
             return (
               <StoryCard
                 key={`story-card-${storyId}`}

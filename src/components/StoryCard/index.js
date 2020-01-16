@@ -26,7 +26,7 @@ const StoryCard = ({ storyId }) => {
     >
       {/* Card header */}
       <div
-        title={storyDetails && 'Expand to view commments'}
+        title={storyDetails && 'Expand to view comments'}
         onClick={() => {
           if (storyDetails) {
             toggleExpand(!expanded)
@@ -34,7 +34,10 @@ const StoryCard = ({ storyId }) => {
         }}
         className='story-card__header'
       >
+        {/* Show Loading Icon while the story data gets fetched from the HackerNews API */}
         { !storyDetails && <LoadingIcon message='Fetching story' /> }
+        
+        {/* Display details once the story data is fetched */}
         { storyDetails && (
           <>
             {/* Header title */}
@@ -56,32 +59,17 @@ const StoryCard = ({ storyId }) => {
 
             {/* Header right */}
             <div className='story-card__header-right'>
-              {/* Stats */}
-              {/*
-                <div className='story-card__header-stats'>
-                  <span className='story-card__header-stat'>
-                    Score: {storyDetails.score}
-                  </span>
-
-                  <span className='story-card__header-stat'>
-                    Comments: {storyDetails.kids.length}
-                  </span>
-                </div>
-              */}
-
               {/* Toggle icon */}
               <i className={`fas fa-${expanded ? 'minus' : 'plus'} story_card__header-toggle`} />
             </div>
           </>
         )}
-
       </div>
 
       {/* Collapsable card body */}
       {expanded && (
-        <div
-          className='story-card__body'
-        >
+        <div className='story-card__body'>
+          {/* Show the story's text - if it exists */}
           { storyDetails.text && (
             <div
               dangerouslySetInnerHTML={{__html: storyDetails.text}}
@@ -89,20 +77,32 @@ const StoryCard = ({ storyId }) => {
             />
           )}
 
-          {/* Render Top 20 comments */}
-          <h3 className='story-card__body-comments-title'>
-            <i className='fas fa-comments' />&nbsp;&nbsp;
-            Comments (Top 20):
-          </h3>
-          { storyDetails.kids.slice(0, 20).map(commentId => {
-              return (
-                <Comment
-                  key={`comment-id-${commentId}`}
-                  commentId={commentId}
-                />
-              )
-            })
-          }
+          {/* Show "No comments" message if there are no comments */}
+          {(!storyDetails.kids || storyDetails.kids.length === 0) && (
+            <p className='story-card__body-no-comments-message'>
+              <i className='fas fa-comment-slash' />&nbsp;&nbsp;
+              No comments for this story
+            </p>
+          )}
+
+          {/* Render Top 20 comments if they are present */}
+          { storyDetails.kids && storyDetails.kids.length !== 0 && (
+            <>
+              <h3 className='story-card__body-comments-title'>
+                <i className='fas fa-comments' />&nbsp;&nbsp;
+                Comments (Top 20):
+              </h3>
+              { storyDetails.kids.slice(0, 20).map(commentId => {
+                  return (
+                    <Comment
+                      key={`comment-id-${commentId}`}
+                      commentId={commentId}
+                    />
+                  )
+                })
+              }
+            </>
+          )}
         </div>
       )}
     </div>

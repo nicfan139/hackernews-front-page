@@ -35,6 +35,9 @@
 
   .app__footer-link {
     color: whitesmoke;
+    display: unset;
+    text-overflow: unset;
+    overflow: unset;
 
     &:visited {
       color: whitesmoke;

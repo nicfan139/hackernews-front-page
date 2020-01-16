@@ -12,6 +12,19 @@ body::-webkit-scrollbar-thumb {
   outline: 1px solid slategrey;
 }
 
+a {
+  display: block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+code {
+  padding: 15px 25px;
+  display: block;
+  white-space: pre-line;
+  background-color: rgba(203, 203, 203, 0.2);
+}
+
 // Mobile view
 @media screen and (max-width: 600px) {
   body::-webkit-scrollbar {
